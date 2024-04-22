@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <limits>
+#include <stdexcept>
 
 using namespace std;
 
@@ -61,153 +62,134 @@ int main() {
     cout << "Ingrese el numero entero que desea sumar:\n";
 
     try {
-        while (!(cin >> numInteger) || cin.peek() != '\n') {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-            cout << "\x1B[2J\x1B[0;0f"; 
-
-            cerr << "Error: Input invalido. Se esperaba un numero entero.\n";
-            cout << "Ingrese nuevamente: ";
+        if (!(cin >> numInteger)){
+            throw invalid_argument("Tenias que poner un numero, no una letra!");
+        } else if (cin.peek() != '\n'){
+            throw invalid_argument("Tenias que poner un numero entero!");
         }
-    } catch (const char& message) {
-        cout << "Error: " << message << "\n";
-        return 1;
+
+    } catch (const exception& e) {
+        cout << "Error: " << e.what() << "\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
+    cout << "Ingrese el numero decimal que desea sumar:\n";
+
     try {
-        cout << "Ingrese el numero decimal que desea sumar:\n";
 
-        while (!(cin >> numDouble)) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-            cout << "\x1B[2J\x1B[0;0f";
-
-            cerr << "Error: Input invalido. Se esperaba un numero.\n";
-            cout << "Ingrese nuevamente: ";
+        if (!(cin >> numDouble)){
+            throw invalid_argument("Ingresa un numero, no letras!");
         }
-    } catch (const char& message) {
-        cout << "Error: " << message << "\n";
-        return 1;
+
+        cout << "La suma es: " << sumPrimitives(numInteger, numDouble) << ".\n";
+        
+    } catch (const exception& e) {
+        cout << "Error: " << e.what() << "\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    cout << "La suma es: " << sumPrimitives(numInteger, numDouble) << ".\n";
+    cout << "------------------------------------\n";
+    cout << "Area de un triangulo\n";
+    cout << "------------------------------------\n";
 
     try {
-        cout << "------------------------------------\n";
-        cout << "Area de un triangulo\n";
-        cout << "------------------------------------\n";
 
         cout << "Ingrese la base de su triangulo:\n";
 
-        while (!(cin >> base) || base <= 0) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-            cout << "\x1B[2J\x1B[0;0f";
-
-            cerr << "Error: Input invalido. La base debe ser un numero positivo.\n";
-            cout << "Ingrese nuevamente la base: ";
+        if (!(cin >> base)){
+            throw invalid_argument("Ingresa numeros, no letras!");
+        } else if (base <= 0){
+            throw invalid_argument("La base no puede ser igual o menor a 0!");
         }
 
         cout << "Ingrese la altura de su triangulo:\n";
 
-        while (!(cin >> altura) || altura <= 0) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-            cout << "\x1B[2J\x1B[0;0f";
-
-            cerr << "Error: Input invalido. La altura debe ser un numero positivo.\n";
-            cout << "Ingrese nuevamente la altura: ";
+        if (!(cin >> altura)){
+            throw invalid_argument("Ingresa numeros, no letras!");
+        } else if (altura <= 0){
+            throw invalid_argument("La altura no puede ser igual o menor a 0!");
         }
 
-    } catch (const char& message) {
-        cout << "Error: " << message << "\n";
-        return 1;
+        cout << "El area de su triangulo es: " << areaT(base, altura) << ".\n";
+
+    } catch (const exception& e) {
+        cout << "Error: " << e.what() << "\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    cout << "El area de su triangulo es: " << areaT(base, altura) << ".\n";
+    cout << "------------------------------------\n";
+    cout << "Par o impar\n";
+    cout << "------------------------------------\n";
 
     try {
-        cout << "------------------------------------\n";
-        cout << "Par o impar\n";
-        cout << "------------------------------------\n";
-
         cout << "Ingrese el numero que desea verificar:\n";
 
-        while (!(cin >> number) || cin.peek() != '\n') {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-            cout << "\x1B[2J\x1B[0;0f";
-
-            cerr << "Error: Input invalido. Debes ingresar un numero entero.\n";
-            cout << "Ingrese nuevamente el numero: ";
+        if (!(cin >> number)){
+            throw invalid_argument("Ingresa numeros!");
+        } else if (cin.peek() != '\n'){
+            throw invalid_argument("El numero tiene que ser entero!");
         }
 
-    } catch (const char& message) {
-        cout << "Error: " << message << "\n";
-        return 1;
+        if (evenOrNot(number)){
+            cout << "Su numero es par!\n";
+        } else {
+            cout << "Su numero es impar!\n";
+        }
+
+
+    } catch (const exception& e) {
+        cout << "Error: " << e.what() << "\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    if (evenOrNot(number)){
-        cout << "Su numero es par!\n";
-    } else {
-        cout << "Su numero es impar!\n";
-    }
+    cout << "------------------------------------\n";
+    cout << "Area de un circulo\n";
+    cout << "------------------------------------\n";
 
     try {
-        cout << "------------------------------------\n";
-        cout << "Area de un circulo\n";
-        cout << "------------------------------------\n";
-
         cout << "Ingrese el radio de su circulo:\n";
 
-        while (!(cin >> radio)) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-            cout << "\x1B[2J\x1B[0;0f";
-
-            cerr << "Error: Input invalido. Debes ingresar un numero.\n";
-            cout << "Ingrese nuevamente el radio: ";
+        if (!(cin >> radio)){
+            throw invalid_argument("El radio debe ser un numero!");
         }
 
-    } catch (const char& message) {
-        cout << "Error: " << message << "\n";
-        return 1;
+        cout << "El area de su circulo es: " << areaC(radio) << ".\n";
+
+    } catch (const exception& e) {
+        cout << "Error: " << e.what() << "\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    cout << "El area de su circulo es: " << areaC(radio) << ".\n";
+    cout << "------------------------------------\n";
+    cout << "Primo o no\n";
+    cout << "------------------------------------\n";
 
     try {
-        cout << "------------------------------------\n";
-        cout << "Primo o no\n";
-        cout << "------------------------------------\n";
 
         cout << "Ingrese el numero que desea verificar:\n";
 
-        while (!(cin >> num) || cin.peek() != '\n') {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-            cout << "\x1B[2J\x1B[0;0f";
-
-            cerr << "Error: Input invalido. Debes ingresar un numero.\n";
-            cout << "Ingrese nuevamente el numero: ";
+        if (!(cin >> num)){
+            throw invalid_argument("Tenes que ingresar un numero!");
+        } else if (cin.peek() != '\n'){
+            throw invalid_argument("Ingresa un numero entero!");
         }
 
-    } catch (const char& message) {
-        cout << "Error: " << message << "\n";
-        return 1;
-    }
-
-    if (isPrime(num)){
+        if (isPrime(num)){
         cout << "Su numero es primo!\n";
-    } else {
-        cout << "Su numero no es primo!\n";
+        } else {
+            cout << "Su numero no es primo!\n";
+        }
+
+    } catch (const exception& e) {
+        cout << "Error: " << e.what() << "\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
     return 0;
