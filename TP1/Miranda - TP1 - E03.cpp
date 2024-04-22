@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <limits>
 
 using namespace std;
 
@@ -86,72 +87,72 @@ int main(){
     int number, num;
     double radio, base, height;
     string words;
-    while (true){
-        cout << "--------------------------\n";
-        cout << "Ingrese el radio de su triangulo:\n"; cin >> radio;
-        if (!isZero(radio) && !isNegative(radio)){
-            cout << "El area de su círculo es: " << areaC(radio) << ".\n";
-        } else {
-            cout << "\x1B[2J\x1B[0;0f";
-            cout << "Ingresaste un valor inadecuado.\n";
-            break;
-        }
-
-        cout << "--------------------------\n";
-        cout << "Ingrese el numero que desea verificar si es par o no:\n"; cin >> number;
-        if (isPositive(number) || isNegative(number) && !isZero(number) && !isDecimal(number)){
-            if(evenOrNot(number)){
-                cout << "Su numero es par!\n";
-            } else {
-                cout << "Su numero es impar!\n";
-            }
-        } else {
-            cout << "\x1B[2J\x1B[0;0f";
-            cout<< "Ingresaste un valor inadecuado.\n";
-            break;
-        }
-
-        cout << "--------------------------\n";
-        cout << "Ingrese el numero que desea verificar si es primo o no:\n"; cin >> num;
-        if (isPositive(num) || isZero(num) && !isNegative(num) && !isDecimal(num)){
-            if(isPrime(num)){
-                cout << "Su numero es primo!\n";
-            } else {
-                cout << "Su numero no es primo!\n";
-            }
-        } else {
-            cout << "\x1B[2J\x1B[0;0f";
-            cout << "Ingresaste un valor inadecuado.\n";
-            break;
-        }
-        cout << "--------------------------\n";
-        cout << "Ingrese la base de su triangulo:\n"; cin >> base;
-        if (!isZero(base) && !isNegative(base)){
-            cout << "Ingrese la altura de su triangulo:\n"; cin >> height;
-                if (!isZero(height) && !isNegative(height)){
-                    cout << "El area de su triangulo es: " << areaT(base, height) << ".\n";
-                } else {
-                    cerr << "\x1B[2J\x1B[0;0f";
-                    cerr << "Ingresaste un valor inadecuado.\n";
-                    break;
-                }
-        } else {
-            cout << "\x1B[2J\x1B[0;0f";
-            cout << "Ingresaste un valor inadecuado.\n";
-            break;
-        }
-
-        cout << "--------------------------\n";
-        cout << "Ingrese la frase que desea dar vuelta:\n"; cin.ignore(); getline(cin, words);
-        if (hasSpaces(words)){
-            cout << "La frase ingresada dada vuelta es: " << reverse(words) << "\n";
-            break;
-        } else {
-            cout << "\x1B[2J\x1B[0;0f";
-            cout << "Ingresaste un valor inadecuado.\n";
-            break;
-        }
-        
+    cout << "--------------------------\n";
+    cout << "Ingrese el radio de su triangulo:\n"; cin >> radio;
+    while (isZero(radio) || isNegative(radio)){
+        cout << "\x1B[2J\x1B[0;0f";
+        cout << "Ingresaste un valor inadecuado. Ingresa otro valor:\n";
+        cin.clear(); 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        cin >> radio;
     }
+    cout << "El area de su círculo es: " << areaC(radio) << ".\n";
+
+    cout << "--------------------------\n";
+    cout << "Ingrese el numero que desea verificar si es par o no:\n"; cin >> number;
+
+    while(!isPositive(number) || !isNegative(number) && isZero(number) && isDecimal(number)){
+        cout << "\x1B[2J\x1B[0;0f";
+        cout << "Ingresaste un valor inadecuado. Ingresa otro valor:\n";
+        cin.clear(); 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        cin >> number;
+    }
+
+    if(evenOrNot(number)){
+        cout << "Su numero es par!\n";
+    } else {
+        cout << "Su numero es impar!\n";
+    }
+
+    cout << "--------------------------\n";
+    cout << "Ingrese el numero que desea verificar si es primo o no:\n"; cin >> num;
+    while (!isPositive(num) || !isZero(num) && isNegative(num) && isDecimal(num)){
+        cout << "\x1B[2J\x1B[0;0f";
+        cout << "Ingresaste un valor inadecuado. Ingresa otro valor:\n";
+        cin.clear(); 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        cin >> num;
+    }
+    if(isPrime(num)){
+        cout << "Su numero es primo!\n";
+    } else {
+        cout << "Su numero no es primo!\n";
+    }
+
+    cout << "--------------------------\n";
+    cout << "Ingrese la base y altura de su triangulo:\n"; cin >> base >> height;
+    while(isZero(base) || isNegative(base) || isZero(height) || isNegative(height)){
+        cerr << "\x1B[2J\x1B[0;0f";
+        cerr << "Ingresaste valores inadecuado. Ingresa otros valores:\n";
+        cin.clear(); 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        cin >> base >> height;
+    }
+    cout << "El area de su triangulo es: " << areaT(base, height) << ".\n";
+
+    cout << "--------------------------\n";
+    cout << "Ingrese la frase que desea dar vuelta:\n";
+    cin.ignore();
+    getline(cin, words);
+
+    while (!hasSpaces(words)){
+        cout << "Ingresaste una frase sin espacios. Ingresa otra con espacios:\n";
+        cin.clear(); 
+        getline(cin, words);
+    }
+
+    cout << "La frase ingresada dada vuelta es: " << reverse(words) << "\n";
+    
     return 0;
 }
